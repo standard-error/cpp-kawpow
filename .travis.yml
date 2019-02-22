@@ -1,6 +1,10 @@
 language: cpp
 os: windows
 
+cache:
+  directories:
+    - $HOME/.hunter/_Base/Cache
+
 script:
   - pwd
   - echo $CC
@@ -8,6 +12,7 @@ script:
   - clang --version
   - cmake --version
   - mkdir build && cd build
-  - cmake .. -G "Visual Studio 15 2017 Win64" -DETHASH_TESTING=ON
+  - cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_CONFIGURATION_TYPES=Release -DHUNTER_CONFIGURATION_TYPES=Release -DETHASH_TESTING=ON
   - cmake --build . --config Release
+  - find
 

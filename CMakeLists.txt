@@ -26,8 +26,8 @@ if(NOT WIN32)
 endif()
 
 HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.20.35.tar.gz"
-    SHA1 "6e3cb4c333b76803a83c56fcbca3b0bfd9f96f27"
+    URL "https://github.com/ruslo/hunter/archive/v0.23.113.tar.gz"
+    SHA1 "ad0f405f150bd66c2a2d828e58e977e567c20486"
 )
 
 project(ethash)

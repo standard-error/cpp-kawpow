@@ -1,0 +1,13 @@
+language: cpp
+os: windows
+
+script:
+  - pwd
+  - echo $CC
+  - $CC --version
+  - clang --version
+  - cmake --version
+  - mkdir build && cd build
+  - cmake .. -G "Visual Studio 15 2017 Win64" -DETHASH_TESTING=ON
+  - cmake --build . --config Release
+

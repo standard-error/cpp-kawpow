@@ -1,4 +1,4 @@
-# ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+# kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 # Copyright 2019 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0.
 
@@ -7,8 +7,8 @@ include(GNUInstallDirs)
 
 add_library(
     keccak
-    ${include_dir}/ethash/keccak.h
-    ${include_dir}/ethash/keccak.hpp
+    ${include_dir}/kawpow/keccak.h
+    ${include_dir}/kawpow/keccak.hpp
     keccak.c
     keccakf800.c
     keccakf1600.c
@@ -18,7 +18,7 @@ target_include_directories(keccak PUBLIC $<BUILD_INTERFACE:${include_dir}>$<INST
 
 install(
     TARGETS keccak
-    EXPORT ethashTargets
+    EXPORT kawpowTargets
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

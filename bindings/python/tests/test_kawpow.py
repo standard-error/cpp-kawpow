@@ -1,13 +1,13 @@
-# ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+# kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 # Copyright 2019 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0.
 
 import unittest
 
-import ethash
+import kawpow
 
 
-class TestEthash(unittest.TestCase):
+class TestKawpow(unittest.TestCase):
     epoch_number = 0
     nonce = 0x4242424242424242
     header_hash = bytes.fromhex(
@@ -25,16 +25,16 @@ class TestEthash(unittest.TestCase):
                 'c00fa9caf9d87976ba469bcbe06713b4'
                 '35f091ef2769fb160cdab33d3670680e')
 
-        self.assertEqual(ethash.keccak_256(b'').hex(), h256)
-        self.assertEqual(ethash.keccak_512(b'').hex(), h512)
+        self.assertEqual(kawpow.keccak_256(b'').hex(), h256)
+        self.assertEqual(kawpow.keccak_512(b'').hex(), h512)
 
     def test_hash(self):
-        f, m = ethash.hash(0, self.header_hash, self.nonce)
+        f, m = kawpow.hash(0, self.header_hash, self.nonce)
         self.assertEqual(m, self.mix_hash)
         self.assertEqual(f, self.final_hash)
 
     def test_verify(self):
-        t = ethash.verify(0, self.header_hash, self.mix_hash, self.nonce,
+        t = kawpow.verify(0, self.header_hash, self.mix_hash, self.nonce,
                           self.final_hash)
         self.assertTrue(t)
         self.assertEqual(type(t), bool)

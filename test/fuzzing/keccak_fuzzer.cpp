@@ -1,8 +1,8 @@
-// Ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// Kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
-#include <ethash/keccak.h>
+#include <kawpow/keccak.h>
 
 #include <cstring>
 #include <string>
@@ -30,20 +30,20 @@ int keccak_tiny_512(uint8_t* out, size_t outlen, const uint8_t* in, size_t inlen
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* input, size_t size)
 {
-    // ethash:
+    // kawpow:
 
-    const auto h256_ethash = ethash_keccak256(input, size);
-    const auto h512_ethash = ethash_keccak512(input, size);
+    const auto h256_kawpow = kawpow_keccak256(input, size);
+    const auto h512_kawpow = kawpow_keccak512(input, size);
 
 
     // tiny:
 
-    ethash_hash256 h256_tiny;
+    kawpow_hash256 h256_tiny;
     int r = keccak_tiny_256(h256_tiny.bytes, sizeof(h256_tiny), input, size);
     if (r != 0)
         __builtin_trap();
 
-    ethash_hash512 h512_tiny;
+    kawpow_hash512 h512_tiny;
     r = keccak_tiny_512(h512_tiny.bytes, sizeof(h512_tiny), input, size);
     if (r != 0)
         __builtin_trap();
@@ -53,12 +53,12 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* input, size_t size)
 
     sha3_ctx ctx;
 
-    ethash_hash256 h256_rhash;
+    kawpow_hash256 h256_rhash;
     rhash_sha3_256_init(&ctx);
     rhash_sha3_update(&ctx, input, size);
     rhash_keccak_final(&ctx, h256_rhash.bytes);
 
-    ethash_hash512 h512_rhash;
+    kawpow_hash512 h512_rhash;
     rhash_sha3_512_init(&ctx);
     rhash_sha3_update(&ctx, input, size);
     rhash_keccak_final(&ctx, h512_rhash.bytes);
@@ -66,20 +66,20 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* input, size_t size)
 
     // Compare.
 
-    if (std::memcmp(&h256_ethash, &h256_tiny, sizeof(h256_ethash)) != 0)
+    if (std::memcmp(&h256_kawpow, &h256_tiny, sizeof(h256_kawpow)) != 0)
         __builtin_trap();
 
-    if (std::memcmp(&h256_ethash, &h256_rhash, sizeof(h256_ethash)) != 0)
+    if (std::memcmp(&h256_kawpow, &h256_rhash, sizeof(h256_kawpow)) != 0)
     {
         std::cerr << "Here!";
         __builtin_trap();
     }
 
 
-    if (std::memcmp(&h512_ethash, &h512_tiny, sizeof(h512_ethash)) != 0)
+    if (std::memcmp(&h512_kawpow, &h512_tiny, sizeof(h512_kawpow)) != 0)
         __builtin_trap();
 
-    if (std::memcmp(&h512_ethash, &h512_rhash, sizeof(h512_ethash)) != 0)
+    if (std::memcmp(&h512_kawpow, &h512_rhash, sizeof(h512_kawpow)) != 0)
         __builtin_trap();
 
     return 0;

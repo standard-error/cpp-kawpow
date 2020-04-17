@@ -1,4 +1,4 @@
-/* ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+/* kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
  * Copyright 2018-2019 Pawel Bylica.
  * Licensed under the Apache License, Version 2.0.
  */
@@ -35,9 +35,9 @@ static const uint32_t round_constants[22] = {
     0x00008080,
 };
 
-void ethash_keccakf800(uint32_t state[25])
+void kawpow_keccakf800(uint32_t state[25])
 {
-    /* The implementation directly translated from ethash_keccakf1600. */
+    /* The implementation directly translated from kawpow_keccakf1600. */
 
     int round;
 

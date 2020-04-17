@@ -61,10 +61,10 @@ defaults:
 
   build-tests: &build-tests
     run:
-      name: "Build ethash-test"
+      name: "Build kawpow-test"
       working_directory: ~/build
       command: |
-        cmake --build . --target ethash-test -- -j $BUILD_PARALLEL_JOBS
+        cmake --build . --target kawpow-test -- -j $BUILD_PARALLEL_JOBS
 
   test: &test
     run:
@@ -72,9 +72,9 @@ defaults:
       working_directory: ~/build
       command: |
         if [ -z "$GTEST_FILTER" ]; then
-          test/ethash-test
+          test/kawpow-test
         else
-          test/ethash-test --gtest_filter=$GTEST_FILTER
+          test/kawpow-test --gtest_filter=$GTEST_FILTER
         fi
 
   test-cmake-config: &test-cmake-config
@@ -84,21 +84,21 @@ defaults:
       command: |
         cmake -DCMAKE_PREFIX_PATH=/tmp/local .
         cmake --build .
-        ./ethash-cmake-config-test
+        ./kawpow-cmake-config-test
 
   test-mips64: &test-mips64
     run:
       name: "Test (mips64)"
       working_directory: ~/build
       command: |
-        qemu-mips64 -L /usr/mips64-linux-gnuabi64 test/ethash-test
+        qemu-mips64 -L /usr/mips64-linux-gnuabi64 test/kawpow-test
 
   benchmark: &benchmark
     run:
       name: "Benchmark"
       working_directory: ~/build
       command: |
-        test/ethash-bench
+        test/kawpow-bench
 
   upload-coverage-data: &upload-coverage-data
     run:
@@ -218,13 +218,13 @@ jobs:
       - *configure
       - *build-tests
       - store_artifacts:
-          path: ~/build/test/ethash-test
-          destination: ethash-test
+          path: ~/build/test/kawpow-test
+          destination: kawpow-test
       - run:
           name: "Test mips64"
           working_directory: ~/build
           command: |  # Software emulation in qemu will not handle threads.
-            qemu-mips64-static test/ethash-test --gtest_filter='-*_multithreaded.*'
+            qemu-mips64-static test/kawpow-test --gtest_filter='-*_multithreaded.*'
 
   powerpc64:
     environment:
@@ -238,13 +238,13 @@ jobs:
       - *configure
       - *build-tests
       - store_artifacts:
-          path: ~/build/test/ethash-test
-          destination: ethash-test
+          path: ~/build/test/kawpow-test
+          destination: kawpow-test
       - run:
           name: "Test powerpc64"
           working_directory: ~/build
           command: |  # Software emulation in qemu will not handle threads.
-            qemu-ppc64-static test/ethash-test --gtest_filter='-*_multithreaded.*'
+            qemu-ppc64-static test/kawpow-test --gtest_filter='-*_multithreaded.*'
 
   linux-release:
     environment:
@@ -347,7 +347,7 @@ jobs:
 
 workflows:
   version: 2
-  ethash:
+  kawpow:
     jobs:
       - linux-gcc-coverage
       - linux-clang-ubsan

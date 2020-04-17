@@ -1,18 +1,18 @@
-// ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
 #include "helpers.hpp"
 #include "test_cases.hpp"
 
-#include <ethash/ethash-internal.hpp>
+#include <kawpow/kawpow-internal.hpp>
 
 #include <gtest/gtest.h>
 
 #include <array>
 #include <future>
 
-using namespace ethash;
+using namespace kawpow;
 
 TEST(managed_multithreaded, hash_all)
 {

@@ -1,33 +1,33 @@
-// ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
 /// @file
-/// Contains declarations of internal ethash functions to allow them to be
+/// Contains declarations of internal kawpow functions to allow them to be
 /// unit-tested.
 
 #pragma once
 
-#include <ethash/ethash.hpp>
+#include <kawpow/kawpow.hpp>
 
 #include "endianness.hpp"
 
 #include <memory>
 #include <vector>
 
-extern "C" struct ethash_epoch_context_full : ethash_epoch_context
+extern "C" struct kawpow_epoch_context_full : kawpow_epoch_context
 {
-    ethash_hash1024* full_dataset;
+    kawpow_hash1024* full_dataset;
 
-    constexpr ethash_epoch_context_full(int epoch, int light_num_items,
-        const ethash_hash512* light, const uint32_t* l1, int dataset_num_items,
-        ethash_hash1024* dataset) noexcept
-      : ethash_epoch_context{epoch, light_num_items, light, l1, dataset_num_items},
+    constexpr kawpow_epoch_context_full(int epoch, int light_num_items,
+        const kawpow_hash512* light, const uint32_t* l1, int dataset_num_items,
+        kawpow_hash1024* dataset) noexcept
+      : kawpow_epoch_context{epoch, light_num_items, light, l1, dataset_num_items},
         full_dataset{dataset}
     {}
 };
 
-namespace ethash
+namespace kawpow
 {
 inline bool is_less_or_equal(const hash256& a, const hash256& b) noexcept
 {
@@ -65,4 +65,4 @@ epoch_context_full* create_epoch_context(
 
 }  // namespace generic
 
-}  // namespace ethash
+}  // namespace kawpow

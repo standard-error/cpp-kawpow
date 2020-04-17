@@ -1,15 +1,15 @@
-// ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
-#include <ethash/ethash.hpp>
-#include <ethash/version.h>
+#include <kawpow/kawpow.hpp>
+#include <kawpow/version.h>
 
 int main()
 {
-    static_assert(sizeof(ethash::version) >= 6, "incorrect ethash::version");
+    static_assert(sizeof(kawpow::version) >= 6, "incorrect kawpow::version");
 
     uint8_t seed_bytes[32] = {0};
-    ethash::hash256 seed = ethash::hash256_from_bytes(seed_bytes);
-    return ethash::find_epoch_number(seed);
+    kawpow::hash256 seed = kawpow::hash256_from_bytes(seed_bytes);
+    return kawpow::find_epoch_number(seed);
 }

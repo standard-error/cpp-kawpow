@@ -1,9 +1,9 @@
-// ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
-#include <ethash/endianness.hpp>
-#include <ethash/progpow.hpp>
+#include <kawpow/endianness.hpp>
+#include <kawpow/progpow.hpp>
 
 #include "helpers.hpp"
 #include "progpow_test_vectors.hpp"
@@ -24,12 +24,12 @@ TEST(progpow, revision)
 
 TEST(progpow, l1_cache)
 {
-    auto& context = get_ethash_epoch_context_0();
+    auto& context = get_kawpow_epoch_context_0();
 
     constexpr auto test_size = 20;
     std::array<uint32_t, test_size> cache_slice;
     for (size_t i = 0; i < cache_slice.size(); ++i)
-        cache_slice[i] = ethash::le::uint32(context.l1_cache[i]);
+        cache_slice[i] = kawpow::le::uint32(context.l1_cache[i]);
 
     const std::array<uint32_t, test_size> expected{
             {2492749011, 430724829, 2029256771, 3095580433, 3583790154, 3025086503,
@@ -41,7 +41,7 @@ TEST(progpow, l1_cache)
 
 TEST(progpow, hash_empty)
 {
-    auto& context = get_ethash_epoch_context_0();
+    auto& context = get_kawpow_epoch_context_0();
 
     const auto result = progpow::hash(context, 0, {}, 0);
     const auto mix_hex = "6e97b47b134fda0c7888802988e1a373affeb28bcd813b6e9a0fc669c935d03a";
@@ -57,7 +57,7 @@ TEST(progpow, hash_30000)
         to_hash256("ffeeddccbbaa9988776655443322110000112233445566778899aabbccddeeff");
     const uint64_t nonce = 0x123456789abcdef0;
 
-    auto context = ethash::create_epoch_context(ethash::get_epoch_number(block_number));
+    auto context = kawpow::create_epoch_context(kawpow::get_epoch_number(block_number));
 
     const auto result = progpow::hash(*context, block_number, header, nonce);
     const auto mix_hex = "177b565752a375501e11b6d9d3679c2df6197b2cab3a1ba2d6b10b8c71a3d459";
@@ -68,13 +68,13 @@ TEST(progpow, hash_30000)
 
 TEST(progpow, hash_and_verify)
 {
-    ethash::epoch_context_ptr context{nullptr, nullptr};
+    kawpow::epoch_context_ptr context{nullptr, nullptr};
 
     for (auto& t : progpow_hash_test_cases)
     {
-        const auto epoch_number = ethash::get_epoch_number(t.block_number);
+        const auto epoch_number = kawpow::get_epoch_number(t.block_number);
         if (!context || context->epoch_number != epoch_number)
-            context = ethash::create_epoch_context(epoch_number);
+            context = kawpow::create_epoch_context(epoch_number);
 
         const auto header_hash = to_hash256(t.header_hash_hex);
         const auto nonce = std::stoull(t.nonce_hex, nullptr, 16);
@@ -102,16 +102,16 @@ TEST(progpow, hash_and_verify)
 
 TEST(progpow, search)
 {
-    auto ctxp = ethash::create_epoch_context_full(0);
+    auto ctxp = kawpow::create_epoch_context_full(0);
     auto& ctx = *ctxp;
-    auto& ctxl = reinterpret_cast<const ethash::epoch_context&>(ctx);
+    auto& ctxl = reinterpret_cast<const kawpow::epoch_context&>(ctx);
 
     auto boundary = to_hash256("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
     auto sr = progpow::search(ctx, 0, {}, boundary, 700, 100);
     auto srl = progpow::search_light(ctxl, 0, {}, boundary, 700, 100);
 
-    EXPECT_EQ(sr.mix_hash, ethash::hash256{});
-    EXPECT_EQ(sr.final_hash, ethash::hash256{});
+    EXPECT_EQ(sr.mix_hash, kawpow::hash256{});
+    EXPECT_EQ(sr.final_hash, kawpow::hash256{});
     EXPECT_EQ(sr.nonce, 0x0);
     EXPECT_EQ(sr.mix_hash, srl.mix_hash);
     EXPECT_EQ(sr.final_hash, srl.final_hash);
@@ -120,8 +120,8 @@ TEST(progpow, search)
     sr = progpow::search(ctx, 0, {}, boundary, 300, 100);
     srl = progpow::search_light(ctxl, 0, {}, boundary, 300, 100);
 
-    EXPECT_NE(sr.mix_hash, ethash::hash256{});
-    EXPECT_NE(sr.final_hash, ethash::hash256{});
+    EXPECT_NE(sr.mix_hash, kawpow::hash256{});
+    EXPECT_NE(sr.final_hash, kawpow::hash256{});
     EXPECT_EQ(sr.nonce, 395);
     EXPECT_EQ(sr.mix_hash, srl.mix_hash);
     EXPECT_EQ(sr.final_hash, srl.final_hash);
@@ -141,7 +141,7 @@ TEST(progpow, generate_hash_test_cases)
     hash256 h{};
     for (int e = 0; e < num_epochs; ++e)
     {
-        auto context = ethash::create_epoch_context(e);
+        auto context = kawpow::create_epoch_context(e);
         auto block_numbers = {
             e * epoch_length,
             e * epoch_length + period_length - 1,

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+# kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 # Copyright 2019 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0.
 
@@ -67,24 +67,24 @@ class build_ext(setuptools_build_ext):
 
 
 setup(
-    name='ethash',
+    name='kawpow',
     version='0.5.1-alpha.1',
     description=
-    "C/C++ implementation of Ethash – the Ethereum Proof of Work algorithm",
-    url='https://github.com/chfast/ethash',
+    "C/C++ implementation of Kawpow – the Ethereum Proof of Work algorithm",
+    url='https://github.com/chfast/kawpow',
     author='Paweł Bylica',
     author_email='pawel@ethereum.org',
     license='Apache License, Version 2.0',
 
     package_dir={'': 'bindings/python'},
-    packages=['ethash'],
-    cffi_modules=['bindings/python/ethash/_build.py:ffibuilder'],
+    packages=['kawpow'],
+    cffi_modules=['bindings/python/kawpow/_build.py:ffibuilder'],
 
     python_requires='>=3.5',
     setup_requires=['cffi>=1.12'],
     install_requires=['cffi>=1.12'],
 
-    test_suite='tests.test_ethash',
+    test_suite='tests.test_kawpow',
 
     cmdclass={'build_ext': build_ext},
 

@@ -1,11 +1,11 @@
-// Ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// Kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
 #include "keccak_utils.hpp"
 
-#include <ethash/keccak.h>
-#include <ethash/keccak.hpp>
+#include <kawpow/keccak.h>
+#include <kawpow/keccak.hpp>
 
 #include <benchmark/benchmark.h>
 
@@ -23,7 +23,7 @@ static void keccakf1600(benchmark::State& state)
 
     for (auto _ : state)
     {
-        ethash_keccakf1600(keccak_state);
+        kawpow_keccakf1600(keccak_state);
         benchmark::DoNotOptimize(keccak_state);
     }
 }
@@ -36,7 +36,7 @@ static void keccakf800(benchmark::State& state)
 
     for (auto _ : state)
     {
-        ethash_keccakf800(keccak_state);
+        kawpow_keccakf800(keccak_state);
         benchmark::DoNotOptimize(keccak_state);
     }
 }
@@ -50,7 +50,7 @@ static void keccak256(benchmark::State& state)
 
     for (auto _ : state)
     {
-        auto h = ethash_keccak256(data.data(), data.size());
+        auto h = kawpow_keccak256(data.data(), data.size());
         benchmark::DoNotOptimize(h.bytes);
     }
 }
@@ -64,7 +64,7 @@ static void keccak512(benchmark::State& state)
 
     for (auto _ : state)
     {
-        auto h = ethash_keccak512(data.data(), data.size());
+        auto h = kawpow_keccak512(data.data(), data.size());
         benchmark::DoNotOptimize(h.bytes);
     }
 }

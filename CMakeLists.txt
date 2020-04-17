@@ -1,4 +1,4 @@
-# ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+# kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 # Copyright 2018-2019 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0.
 
@@ -32,7 +32,7 @@ HunterGate(
     SHA1 "88ea6d37c897a81a080eb9ae0f69d7807bbb3c73"
 )
 
-project(ethash)
+project(kawpow)
 set(PROJECT_VERSION 0.5.1-alpha.1)
 
 cable_configure_compiler(NO_STACK_PROTECTION)
@@ -73,18 +73,18 @@ install(
 )
 
 if(ETHASH_INSTALL_CMAKE_CONFIG)
-    write_basic_package_version_file(ethashConfigVersion.cmake COMPATIBILITY SameMajorVersion)
-    configure_package_config_file(cmake/Config.cmake.in ethashConfig.cmake INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ethash)
+    write_basic_package_version_file(kawpowConfigVersion.cmake COMPATIBILITY SameMajorVersion)
+    configure_package_config_file(cmake/Config.cmake.in kawpowConfig.cmake INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/kawpow)
 
     install(
-        EXPORT ethashTargets
-        NAMESPACE ethash::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ethash
+        EXPORT kawpowTargets
+        NAMESPACE kawpow::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/kawpow
     )
     install(
         FILES
-        ${CMAKE_CURRENT_BINARY_DIR}/ethashConfig.cmake
-        ${CMAKE_CURRENT_BINARY_DIR}/ethashConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ethash
+        ${CMAKE_CURRENT_BINARY_DIR}/kawpowConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/kawpowConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/kawpow
     )
 endif()

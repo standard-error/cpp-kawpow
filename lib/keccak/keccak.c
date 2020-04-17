@@ -1,9 +1,9 @@
-/* ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+/* kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
  * Copyright 2018-2019 Pawel Bylica.
  * Licensed under the Apache License, Version 2.0.
  */
 
-#include <ethash/keccak.h>
+#include <kawpow/keccak.h>
 
 #include "../support/attributes.h"
 #include <string.h>
@@ -61,7 +61,7 @@ static INLINE ALWAYS_INLINE void keccak(
             data += word_size;
         }
 
-        ethash_keccakf1600(state);
+        kawpow_keccakf1600(state);
 
         size -= block_size;
     }
@@ -88,36 +88,36 @@ static INLINE ALWAYS_INLINE void keccak(
 
     state[(block_size / word_size) - 1] ^= 0x8000000000000000;
 
-    ethash_keccakf1600(state);
+    kawpow_keccakf1600(state);
 
     for (i = 0; i < (hash_size / word_size); ++i)
         out[i] = to_le64(state[i]);
 }
 
-union ethash_hash256 ethash_keccak256(const uint8_t* data, size_t size)
+union kawpow_hash256 kawpow_keccak256(const uint8_t* data, size_t size)
 {
-    union ethash_hash256 hash;
+    union kawpow_hash256 hash;
     keccak(hash.word64s, 256, data, size);
     return hash;
 }
 
-union ethash_hash256 ethash_keccak256_32(const uint8_t data[32])
+union kawpow_hash256 kawpow_keccak256_32(const uint8_t data[32])
 {
-    union ethash_hash256 hash;
+    union kawpow_hash256 hash;
     keccak(hash.word64s, 256, data, 32);
     return hash;
 }
 
-union ethash_hash512 ethash_keccak512(const uint8_t* data, size_t size)
+union kawpow_hash512 kawpow_keccak512(const uint8_t* data, size_t size)
 {
-    union ethash_hash512 hash;
+    union kawpow_hash512 hash;
     keccak(hash.word64s, 512, data, size);
     return hash;
 }
 
-union ethash_hash512 ethash_keccak512_64(const uint8_t data[64])
+union kawpow_hash512 kawpow_keccak512_64(const uint8_t data[64])
 {
-    union ethash_hash512 hash;
+    union kawpow_hash512 hash;
     keccak(hash.word64s, 512, data, 64);
     return hash;
 }

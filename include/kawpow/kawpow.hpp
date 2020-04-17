@@ -1,4 +1,4 @@
-// ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
@@ -7,21 +7,21 @@
 /// API design decisions:
 ///
 /// 1. Signed integer type is used whenever the size of the type is not
-///    restricted by the Ethash specification.
+///    restricted by the Kawpow specification.
 ///    See http://www.aristeia.com/Papers/C++ReportColumns/sep95.pdf.
 ///    See https://stackoverflow.com/questions/10168079/why-is-size-t-unsigned/.
 ///    See https://github.com/Microsoft/GSL/issues/171.
 
 #pragma once
 
-#include <ethash/ethash.h>
-#include <ethash/hash_types.hpp>
+#include <kawpow/kawpow.h>
+#include <kawpow/hash_types.hpp>
 
 #include <cstdint>
 #include <cstring>
 #include <memory>
 
-namespace ethash
+namespace kawpow
 {
 constexpr auto revision = ETHASH_REVISION;
 
@@ -30,10 +30,10 @@ static constexpr int light_cache_item_size = ETHASH_LIGHT_CACHE_ITEM_SIZE;
 static constexpr int full_dataset_item_size = ETHASH_FULL_DATASET_ITEM_SIZE;
 static constexpr int num_dataset_accesses = ETHASH_NUM_DATASET_ACCESSES;
 
-using epoch_context = ethash_epoch_context;
-using epoch_context_full = ethash_epoch_context_full;
+using epoch_context = kawpow_epoch_context;
+using epoch_context_full = kawpow_epoch_context_full;
 
-using result = ethash_result;
+using result = kawpow_result;
 
 /// Constructs a 256-bit hash from an array of bytes.
 ///
@@ -61,14 +61,14 @@ struct search_result
 };
 
 
-/// Alias for ethash_calculate_light_cache_num_items().
-static constexpr auto calculate_light_cache_num_items = ethash_calculate_light_cache_num_items;
+/// Alias for kawpow_calculate_light_cache_num_items().
+static constexpr auto calculate_light_cache_num_items = kawpow_calculate_light_cache_num_items;
 
-/// Alias for ethash_calculate_full_dataset_num_items().
-static constexpr auto calculate_full_dataset_num_items = ethash_calculate_full_dataset_num_items;
+/// Alias for kawpow_calculate_full_dataset_num_items().
+static constexpr auto calculate_full_dataset_num_items = kawpow_calculate_full_dataset_num_items;
 
-/// Alias for ethash_calculate_epoch_seed().
-static constexpr auto calculate_epoch_seed = ethash_calculate_epoch_seed;
+/// Alias for kawpow_calculate_epoch_seed().
+static constexpr auto calculate_epoch_seed = kawpow_calculate_epoch_seed;
 
 
 /// Calculates the epoch number out of the block number.
@@ -100,30 +100,30 @@ inline constexpr uint64_t get_full_dataset_size(int num_items) noexcept
 }
 
 /// Owned unique pointer to an epoch context.
-using epoch_context_ptr = std::unique_ptr<epoch_context, decltype(&ethash_destroy_epoch_context)>;
+using epoch_context_ptr = std::unique_ptr<epoch_context, decltype(&kawpow_destroy_epoch_context)>;
 
 using epoch_context_full_ptr =
-    std::unique_ptr<epoch_context_full, decltype(&ethash_destroy_epoch_context_full)>;
+    std::unique_ptr<epoch_context_full, decltype(&kawpow_destroy_epoch_context_full)>;
 
-/// Creates Ethash epoch context.
+/// Creates Kawpow epoch context.
 ///
-/// This is a wrapper for ethash_create_epoch_number C function that returns
+/// This is a wrapper for kawpow_create_epoch_number C function that returns
 /// the context as a smart pointer which handles the destruction of the context.
 inline epoch_context_ptr create_epoch_context(int epoch_number) noexcept
 {
-    return {ethash_create_epoch_context(epoch_number), ethash_destroy_epoch_context};
+    return {kawpow_create_epoch_context(epoch_number), kawpow_destroy_epoch_context};
 }
 
 inline epoch_context_full_ptr create_epoch_context_full(int epoch_number) noexcept
 {
-    return {ethash_create_epoch_context_full(epoch_number), ethash_destroy_epoch_context_full};
+    return {kawpow_create_epoch_context_full(epoch_number), kawpow_destroy_epoch_context_full};
 }
 
 
 inline result hash(
     const epoch_context& context, const hash256& header_hash, uint64_t nonce) noexcept
 {
-    return ethash_hash(&context, &header_hash, nonce);
+    return kawpow_hash(&context, &header_hash, nonce);
 }
 
 result hash(const epoch_context_full& context, const hash256& header_hash, uint64_t nonce) noexcept;
@@ -131,13 +131,13 @@ result hash(const epoch_context_full& context, const hash256& header_hash, uint6
 inline bool verify_final_hash(const hash256& header_hash, const hash256& mix_hash, uint64_t nonce,
     const hash256& boundary) noexcept
 {
-    return ethash_verify_final_hash(&header_hash, &mix_hash, nonce, &boundary);
+    return kawpow_verify_final_hash(&header_hash, &mix_hash, nonce, &boundary);
 }
 
 inline bool verify(const epoch_context& context, const hash256& header_hash, const hash256& mix_hash,
     uint64_t nonce, const hash256& boundary) noexcept
 {
-    return ethash_verify(&context, &header_hash, &mix_hash, nonce, &boundary);
+    return kawpow_verify(&context, &header_hash, &mix_hash, nonce, &boundary);
 }
 
 search_result search_light(const epoch_context& context, const hash256& header_hash,
@@ -153,7 +153,7 @@ search_result search(const epoch_context_full& context, const hash256& header_ha
 /// seed hash instead of epoch number to workers. This function tries to recover
 /// the epoch number from this seed hash.
 ///
-/// @param seed  Ethash seed hash.
+/// @param seed  Kawpow seed hash.
 /// @return      The epoch number or -1 if not found.
 int find_epoch_number(const hash256& seed) noexcept;
 
@@ -161,12 +161,12 @@ int find_epoch_number(const hash256& seed) noexcept;
 /// Get global shared epoch context.
 inline const epoch_context& get_global_epoch_context(int epoch_number) noexcept
 {
-    return *ethash_get_global_epoch_context(epoch_number);
+    return *kawpow_get_global_epoch_context(epoch_number);
 }
 
 /// Get global shared epoch context with full dataset initialized.
 inline const epoch_context_full& get_global_epoch_context_full(int epoch_number) noexcept
 {
-    return *ethash_get_global_epoch_context_full(epoch_number);
+    return *kawpow_get_global_epoch_context_full(epoch_number);
 }
-}  // namespace ethash
+}  // namespace kawpow

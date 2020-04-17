@@ -1,8 +1,8 @@
 
-#include <ethash/progpow.hpp>
+#include <kawpow/progpow.hpp>
 #include "../../test/unittests/helpers.hpp"
-#include <ethash/ethash.hpp>
-#include <ethash/ethash-internal.hpp>
+#include <kawpow/kawpow.hpp>
+#include <kawpow/kawpow-internal.hpp>
 #include <climits>
 #include <memory>
 #include <cstdint>
@@ -23,7 +23,7 @@ int main(int argc, const char* argv[])
 {
     static int epoch_number = 0;
     std::uint16_t SrvPort = DEFAULT_PORT;
-    static ethash::epoch_context_ptr context_light{nullptr, nullptr};
+    static kawpow::epoch_context_ptr context_light{nullptr, nullptr};
 
     for (int i = 0; i < argc; ++i)
     {
@@ -43,7 +43,7 @@ int main(int argc, const char* argv[])
     // Build context
     if (!context_light || context_light->epoch_number != epoch_number) {
         std::cout << "Building context for epoch: " << epoch_number << std::endl;
-        context_light = ethash::create_epoch_context(epoch_number);
+        context_light = kawpow::create_epoch_context(epoch_number);
     }
 
     if (!event_init())
@@ -127,7 +127,7 @@ int main(int argc, const char* argv[])
             // Check epoch number and context
             epoch_number = (int) nHeight / ETHASH_EPOCH_LENGTH;
             if (!context_light || context_light->epoch_number != epoch_number) {
-                context_light = ethash::create_epoch_context(epoch_number);
+                context_light = kawpow::create_epoch_context(epoch_number);
                 std::cout << "Building new context for epoch: " << epoch_number << std::endl;
             }
 
@@ -139,11 +139,11 @@ int main(int argc, const char* argv[])
                 mix_match = "true";
             }
 
-            if (ethash::is_less_or_equal(result.final_hash, share_boundary)) {
+            if (kawpow::is_less_or_equal(result.final_hash, share_boundary)) {
                 share_met = "true";
             }
 
-            if (ethash::is_less_or_equal(result.final_hash, block_boundary)) {
+            if (kawpow::is_less_or_equal(result.final_hash, block_boundary)) {
                 block_met = "true";
             }
 

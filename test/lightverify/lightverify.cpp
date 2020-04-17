@@ -1,5 +1,5 @@
 
-#include <ethash/progpow.hpp>
+#include <kawpow/progpow.hpp>
 #include <iostream>
 
 int main(int argc, const char* argv[])

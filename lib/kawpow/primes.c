@@ -1,4 +1,4 @@
-/* ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+/* kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
  * Copyright 2018-2019 Pawel Bylica.
  * Licensed under the Apache License, Version 2.0.
  */
@@ -21,7 +21,7 @@ static int is_odd_prime(int number)
     return 1;
 }
 
-int ethash_find_largest_prime(int upper_bound)
+int kawpow_find_largest_prime(int upper_bound)
 {
     int n = upper_bound;
 

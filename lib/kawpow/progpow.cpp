@@ -1,15 +1,15 @@
-// ethash: C/C++ implementation of Ethash, the Ethereum Proof of Work algorithm.
+// kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
-#include <ethash/progpow.hpp>
+#include <kawpow/progpow.hpp>
 
 #include "bit_manipulation.h"
 #include "endianness.hpp"
-#include "ethash-internal.hpp"
+#include "kawpow-internal.hpp"
 #include "kiss99.hpp"
 #include "../../test/unittests/helpers.hpp"
-#include <ethash/keccak.hpp>
+#include <kawpow/keccak.hpp>
 
 #include <array>
 
@@ -28,7 +28,7 @@ namespace
 /// @return             The 256-bit output of the hash function.
 void keccak_progpow_256(uint32_t* st) noexcept
 {
-    ethash_keccakf800(st);
+    kawpow_keccakf800(st);
 }
 
 /// The same as keccak_progpow_256() but uses null mix

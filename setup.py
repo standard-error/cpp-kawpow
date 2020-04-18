@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-# kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
+# kawpow: C/C++ implementation of Kawpow, the Ravencoin Proof of Work algorithm.
+# Copyright 2020 The Ravencoin Community
 # Copyright 2019 Pawel Bylica.
 # Licensed under the Apache License, Version 2.0.
 
@@ -35,15 +36,15 @@ class build_ext(setuptools_build_ext):
             '-DCMAKE_INSTALL_LIBDIR=lib',
             '-DCMAKE_POSITION_INDEPENDENT_CODE=TRUE',
             '-DHUNTER_ENABLED=OFF',
-            '-DETHASH_BUILD_TESTS=OFF',
-            '-DETHASH_INSTALL_CMAKE_CONFIG=OFF'
+            '-DKAWPOW_BUILD_TESTS=OFF',
+            '-DKAWPOW_INSTALL_CMAKE_CONFIG=OFF'
         ]
 
         generator = os.environ.get('GENERATOR')
         if generator:
             cmake_opts.append('-G{}'.format(generator))
 
-        if not self.skip_cmake_build and not os.environ.get('ETHASH_PYTHON_SKIP_BUILD'):
+        if not self.skip_cmake_build and not os.environ.get('KAWPOW_PYTHON_SKIP_BUILD'):
             cmake_cmd = shutil.which('cmake')
             if not cmake_cmd:
                 raise CCompilerError(
@@ -68,13 +69,13 @@ class build_ext(setuptools_build_ext):
 
 setup(
     name='kawpow',
-    version='0.5.1-alpha.1',
+    version='0.9.4',
     description=
-    "C/C++ implementation of Kawpow – the Ethereum Proof of Work algorithm",
-    url='https://github.com/chfast/kawpow',
-    author='Paweł Bylica',
-    author_email='pawel@ethereum.org',
+    "C/C++ implementation of Kawpow – the Ravencoin Proof of Work algorithm",
+    url='https://github.com/RavenCommunity/cpp-kawpow',
     license='Apache License, Version 2.0',
+    maintainer='Ravencoin Community',
+    maintainer_email='RavenCommunity@github',
 
     package_dir={'': 'bindings/python'},
     packages=['kawpow'],

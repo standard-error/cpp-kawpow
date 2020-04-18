@@ -1,4 +1,4 @@
-// kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
+// kawpow: C/C++ implementation of Kawpow, the Ravencoin Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 
@@ -27,10 +27,10 @@ constexpr static int full_dataset_growth = 1 << 23;
 constexpr static int full_dataset_item_parents = 512;
 
 // Verify constants:
-static_assert(sizeof(hash512) == ETHASH_LIGHT_CACHE_ITEM_SIZE, "");
-static_assert(sizeof(hash1024) == ETHASH_FULL_DATASET_ITEM_SIZE, "");
-static_assert(light_cache_item_size == ETHASH_LIGHT_CACHE_ITEM_SIZE, "");
-static_assert(full_dataset_item_size == ETHASH_FULL_DATASET_ITEM_SIZE, "");
+static_assert(sizeof(hash512) == KAWPOW_LIGHT_CACHE_ITEM_SIZE, "");
+static_assert(sizeof(hash1024) == KAWPOW_FULL_DATASET_ITEM_SIZE, "");
+static_assert(light_cache_item_size == KAWPOW_LIGHT_CACHE_ITEM_SIZE, "");
+static_assert(full_dataset_item_size == KAWPOW_FULL_DATASET_ITEM_SIZE, "");
 
 
 namespace

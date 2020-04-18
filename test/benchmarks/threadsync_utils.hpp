@@ -1,4 +1,4 @@
-// Kawpow: C/C++ implementation of Kawpow, the Ethereum Proof of Work algorithm.
+// Kawpow: C/C++ implementation of Kawpow, the Ravencoin Proof of Work algorithm.
 // Copyright 2018-2019 Pawel Bylica.
 // Licensed under the Apache License, Version 2.0.
 

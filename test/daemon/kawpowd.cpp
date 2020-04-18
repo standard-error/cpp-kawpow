@@ -125,7 +125,7 @@ int main(int argc, const char* argv[])
             nHeight = (uint32_t) nH;
 
             // Check epoch number and context
-            epoch_number = (int) nHeight / ETHASH_EPOCH_LENGTH;
+            epoch_number = (int) nHeight / KAWPOW_EPOCH_LENGTH;
             if (!context_light || context_light->epoch_number != epoch_number) {
                 context_light = kawpow::create_epoch_context(epoch_number);
                 std::cout << "Building new context for epoch: " << epoch_number << std::endl;

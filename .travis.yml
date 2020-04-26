@@ -1,0 +1,47 @@
+language: python
+
+jobs:
+  include:
+    # perform a linux build
+#    - services: docker
+    # and a mac build
+#    - os: osx
+#      language: shell
+    # and a windows build
+    - os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.8.0
+        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+env:
+  global:
+    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
+    - TWINE_USERNAME=__token__
+    # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
+
+install:
+  - python3 -m pip install cibuildwheel==1.3.0
+
+script:
+  # build the wheels, put them into './wheelhouse'
+  - python3 -m cibuildwheel --output-dir wheelhouse
+
+#after_success:
+#  # if the release was tagged, upload them to PyPI
+#  - |
+#    if [[ $TRAVIS_TAG ]]; then
+#      python3 -m pip install twine
+#      python3 -m twine upload wheelhouse/*.whl
+#    fi
+
+#deploy:
+#  provider: pypi
+#  skip_existing: true
+#  user: ravencoin-community
+#  on:
+#    tags: true
+#    branch: master
+#  password:
+#    secure: ZPKskVP8SkdEk3biP9Wq1C4kr66WBIm6aT5WidJtx2gR55iz+LJQDNHSAHxRdp3A0q1dSqVbqT9Ltc5Grs4Bv8o7po1fys6isg8UPQtlKP06UsBOgpKoILx4lw1e+5MDr86PBVTjF31cenhcl4PcpvbjecWe8qqhrS6miGLWhoIPoIKsxNOW/wgQym4viYuz5ErSfwY80wK5PTW8+fESZQTemjN+WPAWkJC6aHtdYPNzZCninBVKaC38+8jn6BtuQoA55aPH+QNbWx1pVVEE8VdaAVxNd6vKMbeRSDUEwtAiaYdJwJQzLn6P7SsW9+i560VIUDkH7AXAOvs4DJCLREUmZ6EucYmfO0fbAZQGQQjv61QptsN7TQmWiXN+6cxcWwwRF519uf7I2LGacBRIyagQ0XvzcMCJmZINiN7r+ep1mdTy8M9LP4WB9hxBcpj65QqQIpBTjPof89e3nmXgXSJyyOXYW/gkE8Y8CnLw/2JgbW4TLllv9kMMlViSvFmlDooITF+U+KGQWl+DEy3Ks8NJQnGZXNvERcv2M3Wm+bnOeikppSbfB8y0Ee6YSNCKSYFuvqZ24yjQYYop5fYfea5maWGT5brrnM2Iw2hGlPtAmQSw8DRMWIx2muRwPNnGJAeoh6CclSGm8o1fXVNkjeRWGCOhnwCXeu9pN3RlTak=
+#  distributions: sdist bdist_wheel

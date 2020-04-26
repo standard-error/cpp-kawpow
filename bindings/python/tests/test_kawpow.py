@@ -13,9 +13,9 @@ class TestKawpow(unittest.TestCase):
     header_hash = bytes.fromhex(
         '2a8de2adf89af77358250bf908bf04ba94a6e8c3ba87775564a41d269a05e4ce')
     mix_hash = bytes.fromhex(
-        '58f759ede17a706c93f13030328bcea40c1d1341fb26f2facd21ceb0dae57017')
+        '89b6b75f64a89b05393536d14ccea1f8b40d8dffab98d5a812e2f9210d5118d3')
     final_hash = bytes.fromhex(
-        'dd47fd2d98db51078356852d7c4014e6a5d6c387c35f40e2875b74a256ed7906')
+        '89b612bfaf68f940af983f44fc22df6dfc2836a8f6d5f9da4ebe483d868761c5')
 
     def test_keccak(self):
         h256 = ('c5d2460186f7233c927e7db2dcc703c0'
@@ -29,12 +29,12 @@ class TestKawpow(unittest.TestCase):
         self.assertEqual(kawpow.keccak_512(b'').hex(), h512)
 
     def test_hash(self):
-        f, m = kawpow.hash(0, self.header_hash, self.nonce)
+        f, m = kawpow.hash(self.epoch_number, self.header_hash, self.nonce)
         self.assertEqual(m, self.mix_hash)
         self.assertEqual(f, self.final_hash)
 
     def test_verify(self):
-        t = kawpow.verify(0, self.header_hash, self.mix_hash, self.nonce,
+        t = kawpow.verify(self.epoch_number, self.header_hash, self.mix_hash, self.nonce,
                           self.final_hash)
         self.assertTrue(t)
         self.assertEqual(type(t), bool)

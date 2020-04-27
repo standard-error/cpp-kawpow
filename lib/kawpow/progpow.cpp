@@ -8,7 +8,7 @@
 #include "endianness.hpp"
 #include "kawpow-internal.hpp"
 #include "kiss99.hpp"
-#include "../../test/unittests/helpers.hpp"
+///#include "../../test/unittests/helpers.hpp"
 #include <kawpow/keccak.hpp>
 
 #include <array>

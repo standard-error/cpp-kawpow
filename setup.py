@@ -69,7 +69,7 @@ class build_ext(setuptools_build_ext):
 
 setup(
     name='kawpow',
-    version='0.9.4.1',
+    version='0.9.4.2',
     description=
     "C/C++ implementation of Kawpow – the Ravencoin Proof of Work algorithm",
     url='https://github.com/RavenCommunity/cpp-kawpow',
@@ -79,6 +79,7 @@ setup(
     package_dir={'': 'bindings/python'},
     packages=['kawpow'],
     cffi_modules=['bindings/python/kawpow/_build.py:ffibuilder'],
+    scripts=['kawpowhash.py'],
 
     python_requires='>=3.5',
     setup_requires=['cffi>=1.12'],

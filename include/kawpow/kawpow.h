@@ -126,6 +126,10 @@ bool kawpow_verify_final_hash(const union kawpow_hash256* header_hash,
     const union kawpow_hash256* mix_hash, uint64_t nonce,
     const union kawpow_hash256* boundary) NOEXCEPT;
 
+
+union kawpow_hash256 light_verify_2(const union kawpow_hash256* header_hash,
+                       const union kawpow_hash256* mix_hash, uint64_t nonce) NOEXCEPT;
+
 #ifdef __cplusplus
 }
 #endif

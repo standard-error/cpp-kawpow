@@ -27,6 +27,20 @@ def hash(epoch_number, header_hash, nonce):
     mix_hash = ffi.unpack(result.mix_hash.str, len(result.mix_hash.str))
     return final_hash, mix_hash
 
+def light_verify(header_hash, mix_hash, nonce):
+    if len(header_hash) != 32:
+        raise ValueError('header_hash must have length of 32')
+
+    c_header_hash = ffi.new('union kawpow_hash256*')
+    c_header_hash[0].str = header_hash
+
+    c_mix_hash = ffi.new('union kawpow_hash256*')
+    c_mix_hash[0].str = mix_hash
+
+    result = lib.light_verify_2(c_header_hash, c_mix_hash, nonce)
+    final_hash = ffi.unpack(result.str, len(result.str))
+    return final_hash
+
 
 def verify(epoch_number, header_hash, mix_hash, nonce, boundary):
     if len(header_hash) != 32:

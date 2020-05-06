@@ -59,6 +59,8 @@ const struct kawpow_epoch_context* kawpow_get_global_epoch_context(int epoch_num
 struct kawpow_result kawpow_hash(const struct kawpow_epoch_context* context,
     const union kawpow_hash256* header_hash, uint64_t nonce);
     
+union kawpow_hash256 light_verify_2(const union kawpow_hash256* header_hash, const union kawpow_hash256* mix_hash, uint64_t nonce);
+    
 bool kawpow_verify(const struct kawpow_epoch_context* context,
     const union kawpow_hash256* header_hash, const union kawpow_hash256* mix_hash, uint64_t nonce,
     const union kawpow_hash256* boundary);

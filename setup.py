@@ -66,15 +66,21 @@ class build_ext(setuptools_build_ext):
 
         super(build_ext, self).run()
 
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'DESCRIPTION.md')) as f:
+    DESC = f.read()
 
 setup(
     name='kawpow',
-    version='0.9.4.2',
+    version='0.9.4.4',
     description=
     "C/C++ implementation of Kawpow – the Ravencoin Proof of Work algorithm",
     url='https://github.com/RavenCommunity/cpp-kawpow',
     license='Apache License, Version 2.0',
     maintainer='Ravencoin Community',
+
+    long_description=DESC,
+    long_description_content_type='text/markdown',
 
     package_dir={'': 'bindings/python'},
     packages=['kawpow'],
